@@ -1,22 +1,22 @@
 INCDIRS:=/Users/dmielke/Documents/oopl/trees/googletest/googletest/include
 LIBDIRS:=/Users/dmielke/Documents/oopl/trees/googletest/googletest/make
 
-FILES :=                                \
-    .travis.yml                         \
-    dijkstra-tests/EID-RunDijkstra.in   \
-    dijkstra-tests/EID-RunDijkstra.out  \
-    dijkstra-tests/EID-TestDijkstra.c++ \
-    dijkstra-tests/EID-TestDijkstra.out \
-    Dijkstra.c++                        \
-    Dijkstra.h                          \
-    Dijkstra.log                        \
-    html                                \
-    RunDijkstra.c++                     \
-    RunDijkstra.in                      \
-    RunDijkstra.out                     \
-    TestDijkstra.c++                    \
-    TestDijkstra.out                    \
-    DijkstraBundle.c++
+FILES :=                                        \
+    .travis.yml                                 \
+    dijkstra-tests/EID-RunAustralianVoting.in   \
+    dijkstra-tests/EID-RunAustralianVoting.out  \
+    dijkstra-tests/EID-TestAustralianVoting.c++ \
+    dijkstra-tests/EID-TestAustralianVoting.out \
+    AustralianVoting.c++                        \
+    AustralianVoting.h                          \
+    AustralianVoting.log                        \
+    html                                        \
+    RunAustralianVoting.c++                     \
+    RunAustralianVoting.in                      \
+    RunAustralianVoting.out                     \
+    TestAustralianVoting.c++                    \
+    TestAustralianVoting.out                    \
+    AustralianVotingBundle.c++
 
 # Call gcc and gcov differently on Darwin
 ifeq ($(shell uname), Darwin)
@@ -39,22 +39,22 @@ clean:
 	rm -f *.gcda
 	rm -f *.gcno
 	rm -f *.gcov
-	rm -f RunDijkstra
-	rm -f RunDijkstra.tmp
-	rm -f TestDijkstra
-	rm -f TestDijkstra.tmp
-	rm -f DijkstraBundle
+	rm -f RunAustralianVoting
+	rm -f RunAustralianVoting.tmp
+	rm -f TestAustralianVoting
+	rm -f TestAustralianVoting.tmp
+	rm -f AustralianVotingBundle
 
 config:
 	git config -l
 
 bundle:
-	cat Dijkstra.h Dijkstra.c++ RunDijkstra.c++ | sed -e "s/#include \"Dijkstra.h\"//g" > DijkstraBundle.c++
-	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) DijkstraBundle.c++ -o DijkstraBundle
+	cat AustralianVoting.h AustralianVoting.c++ RunAustralianVoting.c++ | sed -e "s/#include \"AustralianVoting.h\"//g" > AustralianVotingBundle.c++
+	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) AustralianVotingBundle.c++ -o AustralianVotingBundle
 
 scrub:
 	make  clean
-	rm -f  Dijkstra.log
+	rm -f  AustralianVoting.log
 	rm -rf dijkstra-tests
 	rm -rf html
 	rm -rf latex
@@ -66,21 +66,21 @@ status:
 	git remote -v
 	git status
 
-test: RunDijkstra.tmp TestDijkstra.tmp
+test: RunAustralianVoting.tmp TestAustralianVoting.tmp
 
-RunDijkstra: Dijkstra.h Dijkstra.c++ RunDijkstra.c++
-	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) Dijkstra.c++ RunDijkstra.c++ -o RunDijkstra
+RunAustralianVoting: AustralianVoting.h AustralianVoting.c++ RunAustralianVoting.c++
+	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) AustralianVoting.c++ RunAustralianVoting.c++ -o RunAustralianVoting
 
-RunDijkstra.tmp: RunDijkstra
-	./RunDijkstra < RunDijkstra.in > RunDijkstra.tmp
-	diff RunDijkstra.tmp RunDijkstra.out
+RunAustralianVoting.tmp: RunAustralianVoting
+	./RunAustralianVoting < RunAustralianVoting.in > RunAustralianVoting.tmp
+	diff RunAustralianVoting.tmp RunAustralianVoting.out
 
-TestDijkstra: Dijkstra.h Dijkstra.c++ TestDijkstra.c++
-	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) Dijkstra.c++ TestDijkstra.c++ -o TestDijkstra $(LDFLAGS)
+TestAustralianVoting: AustralianVoting.h AustralianVoting.c++ TestAustralianVoting.c++
+	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) AustralianVoting.c++ TestAustralianVoting.c++ -o TestAustralianVoting $(LDFLAGS)
 
-TestDijkstra.tmp: TestDijkstra
-	./TestDijkstra                                                    >  TestDijkstra.tmp 2>&1
-	$(VALGRIND) ./TestDijkstra                                        >> TestDijkstra.tmp
-	$(GCOV) -b Dijkstra.c++     | grep -A 5 "File 'Dijkstra.c++'"     >> TestDijkstra.tmp
-	$(GCOV) -b TestDijkstra.c++ | grep -A 5 "File 'TestDijkstra.c++'" >> TestDijkstra.tmp
-	cat TestDijkstra.tmp
+TestAustralianVoting.tmp: TestAustralianVoting
+	./TestAustralianVoting                                                            >  TestAustralianVoting.tmp 2>&1
+	$(VALGRIND) ./TestAustralianVoti        ng                                        >> TestAustralianVoting.tmp
+	$(GCOV) -b AustralianVoting.c++     | grep -A 5 "File 'AustralianVoting.c++'"     >> TestAustralianVoting.tmp
+	$(GCOV) -b TestAustralianVoting.c++ | grep -A 5 "File 'TestAustralianVoting.c++'" >> TestAustralianVoting.tmp
+	cat TestAustralianVoting.tmp
