@@ -53,12 +53,13 @@ Winners australian_voting_eval (const int num_candidates, Ballots& ballots)
 	  top_votes = votes[c];
 	} else if (votes[c] == top_votes) {
 	  top_vote_cans.push_back(c);
-	} else if (votes[c] == bottom_votes) {
-	  bottom_vote_cans.push_back(c);
-	} else if (votes[c] < bottom_votes) {
+	}
+	if (votes[c] < bottom_votes) {
 	  bottom_vote_cans.clear();
 	  bottom_vote_cans.push_back(c);
 	  bottom_votes = votes[c];
+	} else if (votes[c] == bottom_votes) {
+	  bottom_vote_cans.push_back(c);
 	}
       }
     }
@@ -163,22 +164,22 @@ void australian_voting_solve (std::istream& r, std::ostream& w)
 	for (int i = 0; i < num_candidates; ++i) {
 	  int can = 0;
 	  sin >> can;
-	  --can;
-	  ballot.emplace_back(can);
+	  ballot.emplace_back(can-1);
 	}
       }
     }
     while (!done);
 
-    std::cout << num_elections << std::endl;
-    std::cout << num_candidates << std::endl;
-    std::cout << ballots.size() << std::endl;
+    //std::cout << num_elections << std::endl;
+    //std::cout << num_candidates << std::endl;
+    //std::cout << ballots.size() << std::endl;
 
     // Determine the winners and print the answer
     const Winners winners = australian_voting_eval(num_candidates, ballots);
 
-    std::cout << "Finished eval" << std::endl;
+    //std::cout << "Eval finished" << std::endl;
 
     australian_voting_print(w, winners, names);
+    w << std::endl;
   }
 }
