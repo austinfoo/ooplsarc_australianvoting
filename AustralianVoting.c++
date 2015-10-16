@@ -96,7 +96,6 @@ Winners australian_voting_eval (const int num_candidates, Ballots& ballots)
 	}
       }
     }
-
   }
 }
 
@@ -170,20 +169,16 @@ void australian_voting_solve (std::istream& r, std::ostream& w)
     }
     while (!done);
 
-    //std::cout << num_elections << std::endl;
-    //std::cout << num_candidates << std::endl;
-    //std::cout << ballots.size() << std::endl;
-
-    // Determine the winners and print the answer
+    // Determine the winners
     const Winners winners = australian_voting_eval(num_candidates, ballots);
 
-    //std::cout << "Eval finished" << std::endl;
-
-    australian_voting_print(w, winners, names);
-    
-    bool last = e == (num_elections-1);
-    if (!last) {
+    // Print a blank line before all results except the first to make the judge happy
+    bool first = e == 0;
+    if (!first) {
       w << std::endl;
     }
+    
+    // Print the result
+    australian_voting_print(w, winners, names);
   }
 }
