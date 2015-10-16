@@ -180,6 +180,10 @@ void australian_voting_solve (std::istream& r, std::ostream& w)
     //std::cout << "Eval finished" << std::endl;
 
     australian_voting_print(w, winners, names);
-    w << std::endl;
+    
+    bool last = e == (num_elections-1);
+    if (!last) {
+      w << std::endl;
+    }
   }
 }
